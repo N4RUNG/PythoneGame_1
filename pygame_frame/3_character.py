@@ -8,10 +8,10 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 
 pygame.display.set_caption("Game Name")
 
-background = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\back.png")
+background = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\pygame_frame\\back.png")
 
 # 캐릭터(스프라이트) 불러오기
-character = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\chac.png")
+character = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\pygame_frame\\chac.png")
 char_size = character.get_rect().size # 이미지의 크기를 구해올 수 있음.
 char_width = char_size[0] # 캐릭터의 가로 크기
 char_height = char_size[1] # 캐릭터의 새로 크기

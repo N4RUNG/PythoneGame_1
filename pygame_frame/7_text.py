@@ -10,21 +10,23 @@ pygame.display.set_caption("Game Name")
 
 clock = pygame.time.Clock()
 
-background = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\back.png")
+background = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\pygame_frame\\back.png")
 
-character = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\chac.png")
+character = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\pygame_frame\\chac.png")
 char_size = character.get_rect().size
 char_width = char_size[0]
 char_height = char_size[1]
 char_x_pos = (screen_width/2) - (char_width/2)
 char_y_pos = screen_height - char_height
 
-to_x = 0
-to_y = 0
+to_x_L = 0
+to_x_R = 0
+to_y_U = 0
+to_y_D = 0
 
 char_speed = 1
 
-enemy = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\enemy.png")
+enemy = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\pygame_frame\\enemy.png")
 enemy_size = enemy.get_rect().size
 enemy_width = enemy_size[0]
 enemy_height = enemy_size[1]
@@ -51,22 +53,26 @@ while running:
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                to_y -= char_speed
+                to_y_U -= char_speed
             if event.key == pygame.K_DOWN:
-                to_y += char_speed
+                to_y_D += char_speed
             if event.key == pygame.K_LEFT:
-                to_x -= char_speed
+                to_x_L -= char_speed
             if event.key == pygame.K_RIGHT:
-                to_x += char_speed
+                to_x_R += char_speed
         
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                to_y = 0
-            elif event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                to_x = 0
-    
-    char_x_pos += (to_x * dt)
-    char_y_pos += (to_y * dt) 
+            if event.key == pygame.K_UP:
+                to_y_U = 0
+            if event.key == pygame.K_DOWN:
+                to_y_D = 0
+            if event.key == pygame.K_LEFT:
+                to_x_L = 0
+            if event.key == pygame.K_RIGHT:
+                to_x_R = 0
+
+    char_x_pos += ((to_x_L+to_x_R) * dt)
+    char_y_pos += ((to_y_U+to_y_D) * dt) 
 
     if char_x_pos < 0:
         char_x_pos = 0
@@ -109,6 +115,6 @@ while running:
     pygame.display.update()
 
 # 잠시 대기
-pygame.time.delay(1000) # 1초 대기
+pygame.time.delay(500) # 0.5초 대기
 
 pygame.quit()

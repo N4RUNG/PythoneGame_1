@@ -1,5 +1,6 @@
 import pygame
 
+######################### 메인 #########################
 # 초기화 (무조건 필요)
 pygame.init()
 
@@ -13,12 +14,14 @@ pygame.display.set_caption("Game Name") # 타이틀 이름
 
 # FPS
 clock = pygame.time.Clock()
+######################### 메인 #########################
+
 
 # 배경 이미지 불러오기
-background = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\back.png") # \를 /로 바꿔도 되고 \\로 해도 됨.
+background = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\pygame_frame\\back.png") # \를 /로 바꿔도 되고 \\로 해도 됨.
 
 # 캐릭터(스프라이트) 불러오기
-character = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\chac.png")
+character = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\pygame_frame\\chac.png")
 char_size = character.get_rect().size # 이미지의 크기를 구해올 수 있음.
 char_width = char_size[0] # 캐릭터의 가로 크기
 char_height = char_size[1] # 캐릭터의 새로 크기
@@ -26,14 +29,16 @@ char_x_pos = (screen_width/2) - (char_width/2) # 화면 가로 크기의 절반�
 char_y_pos = screen_height - char_height # 화면 세로 크기의 아래에서 캐릭터 세로 크기를 뺀 위치
 
 # 이동 좌표
-to_x = 0
-to_y = 0
+to_x_L = 0
+to_x_R = 0
+to_y_U = 0
+to_y_D = 0
 
 # 이동 속도
 char_speed = 1
 
 # 적 캐릭터 불러오기
-enemy = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\enemy.png")
+enemy = pygame.image.load("C:\\Users\\Administrator\\Desktop\\-\\5. git\\PythonGame1\\pygame_frame\\enemy.png")
 enemy_size = enemy.get_rect().size
 enemy_width = enemy_size[0]
 enemy_height = enemy_size[1]
@@ -65,24 +70,28 @@ while running:
         # 키보드 누름 이벤트
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP: # 누른 키가 위쪽 방향키
-                to_y -= char_speed
+                to_y_U -= char_speed
             if event.key == pygame.K_DOWN: # 누른 키가 아래쪽 방향키
-                to_y += char_speed
+                to_y_D += char_speed
             if event.key == pygame.K_LEFT: # 누른 키가 왼쪽 방향키
-                to_x -= char_speed
+                to_x_L -= char_speed
             if event.key == pygame.K_RIGHT: # 누른 키가 오른쪽 방향키
-                to_x += char_speed
+                to_x_R += char_speed
         
-        # 방향키를 떼면 멈춤
+        # 키보드 뗌 이벤트
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN: # 뗀 키가 위, 아래 방향키
-                to_y = 0
-            elif event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: # 뗀 키가 왼, 오른 방향키
-                to_x = 0
-    
+            if event.key == pygame.K_UP: # 뗀 키가 위 방향키
+                to_y_U = 0
+            if event.key == pygame.K_DOWN: # 뗀 키가 아래 방향키
+                to_y_D = 0
+            if event.key == pygame.K_LEFT: # 뗀 키가 왼 방향키
+                to_x_L = 0
+            if event.key == pygame.K_RIGHT: # 뗀 키가 오른 방향키
+                to_x_R = 0
+
     # 캐릭터 이동
-    char_x_pos += (to_x * dt) # 프레임에 따라 이동 속도가 차이가 없게 해줌.
-    char_y_pos += (to_y * dt) 
+    char_x_pos += ((to_x_L+to_x_R) * dt) # 프레임에 따라 이동 속도가 차이가 없게 해줌.
+    char_y_pos += ((to_y_U+to_y_D) * dt) 
 
     # 가로 경계
     if char_x_pos < 0:
@@ -112,7 +121,7 @@ while running:
         running = False
     
     # 게임 이미지 설정
-    screen.blit(background, (0, 0)) # 이미랑 어디에 나타날 지 좌표를 적음. (좌표는 튜플 형식으로)
+    screen.blit(background, (0, 0)) # 이미지랑 어디에 나타날 지 좌표를 적음. (좌표는 튜플 형식으로)
 
     # 게임 캐릭터 설정
     screen.blit(character, (char_x_pos,  char_y_pos))
@@ -136,7 +145,7 @@ while running:
     pygame.display.update() # 게임 화면을 계속 그려줌. (계속 호출되어야 함)
 
 # 잠시 대기
-pygame.time.delay(1000) # 1초 대기
+pygame.time.delay(500) # 0.5초 대기
 
 # 게임 종료
 pygame.quit() # pygame 종료
