@@ -1,3 +1,4 @@
+from typing import Counter
 import pygame
 from os import *
 from random import *
@@ -218,7 +219,9 @@ while running:
                         "to_y" : -6,
                         "init_spd_y" : ball_speed_y[ball_img_idx+1]})
                 break
-            break
+        else: # for 문에서 비교할 게 없으면 else 문을 타게 됨.
+            continue # 아래 break 를 처리안하게 함
+        break # 이 break 가 실행되기 위에서는 위의 for문의 break를 타야함.
 
     # 무기 <> 공 충돌 처리
     if ball_to_remove > -1:
